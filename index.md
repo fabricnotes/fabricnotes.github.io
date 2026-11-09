@@ -1,0 +1,1 @@
+Microsoft Fabric arhitecture and design notes written by Mohamed Amin  [LinkedIn](https://linkedin.com/in/modamin)
