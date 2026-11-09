@@ -1,0 +1,105 @@
+---
+---
+
+@import "jekyll-theme-primer";
+
+:root {
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  body,
+  .markdown-body {
+    color: #e6edf3;
+    background-color: #0d1117;
+  }
+
+  .markdown-body {
+    a {
+      color: #58a6ff;
+    }
+
+    h1,
+    h2,
+    table th,
+    table td {
+      border-color: #30363d;
+    }
+
+    blockquote {
+      color: #9198a1;
+      border-color: #30363d;
+    }
+
+    hr {
+      background-color: #30363d;
+      border-color: #30363d;
+    }
+
+    table tr {
+      background-color: #0d1117;
+      border-color: #30363d;
+    }
+
+    table tr:nth-child(2n) {
+      background-color: #161b22;
+    }
+
+    code,
+    tt {
+      background-color: #262c36;
+    }
+
+    pre,
+    .highlight pre,
+    .highlight {
+      color: #e6edf3;
+      background-color: #161b22;
+    }
+
+    pre code,
+    pre tt {
+      background-color: transparent;
+    }
+
+    .highlight {
+      .c, .c1, .cm, .cp, .cs, .gh, .gu {
+        color: #9198a1;
+      }
+
+      .k, .kc, .kd, .kn, .kp, .kr, .kt, .o, .ow {
+        color: #ff7b72;
+      }
+
+      .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss {
+        color: #a5d6ff;
+      }
+
+      .m, .mf, .mh, .mi, .mo, .il, .na, .nb, .no, .nv {
+        color: #79c0ff;
+      }
+
+      .nc, .ne, .nf, .nn {
+        color: #d2a8ff;
+      }
+
+      .gd {
+        color: #ffdcd7;
+        background-color: #67060c;
+      }
+
+      .gi {
+        color: #aff5b4;
+        background-color: #033a16;
+      }
+    }
+  }
+
+  .text-gray {
+    color: #9198a1 !important;
+  }
+
+  .border-gray-light {
+    border-color: #30363d !important;
+  }
+}

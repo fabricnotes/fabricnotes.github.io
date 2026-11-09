@@ -32,7 +32,6 @@ The architecture is built to:
 Workspaces are split three ways: by **domain** (Hub, Spoke 1, Spoke 2), by **workload** (Data vs. BI) and by **lifecycle stage** (DEV/UAT vs. PROD). Spoke 1 and Spoke 2 stand in for any number of domains.
 
 ```mermaid
-%%{init: {"theme": "neutral"}}%%
 block-beta
   columns 7
   S1DD("Spoke 1 Data<br/>dev/uat workspaces<br/>CA · OAP") space S1DP("Spoke 1 Data<br/>prod workspace<br/>CA · OAP") space S1BP("Spoke 1 BI<br/>prod workspace<br/>CA · DLP") space S1BD("Spoke 1 BI<br/>dev/uat workspaces<br/>CA · OAP")
