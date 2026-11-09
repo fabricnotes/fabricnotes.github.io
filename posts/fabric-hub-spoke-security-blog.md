@@ -1,3 +1,7 @@
+---
+layout: mermaid
+---
+
 # Hub-and-Spoke Security for Microsoft Fabric: Cross-Domain Sharing Without the Rule Mesh
 
 *How to combine OneLake shortcuts, Outbound Access Protection, Conditional Access and Purview DLP into a governed, scalable Fabric topology*
@@ -28,50 +32,42 @@ The architecture is built to:
 Workspaces are split three ways: by **domain** (Hub, Spoke 1, Spoke 2), by **workload** (Data vs. BI) and by **lifecycle stage** (DEV/UAT vs. PROD). Spoke 1 and Spoke 2 stand in for any number of domains.
 
 ```mermaid
+%%{init: {"theme": "neutral"}}%%
 block-beta
   columns 7
-  S1DD["🟩 Spoke 1 Data<br/>dev/uat workspaces 🔴"] space S1DP["🟩 Spoke 1 Data<br/>prod workspace 🔴"] space S1BP["🟩 Spoke 1 BI<br/>prod workspace 🔷"] space S1BD["🟩 Spoke 1 BI<br/>dev/uat workspaces 🔴"]
+  S1DD("Spoke 1 Data<br/>dev/uat workspaces<br/>CA · OAP") space S1DP("Spoke 1 Data<br/>prod workspace<br/>CA · OAP") space S1BP("Spoke 1 BI<br/>prod workspace<br/>CA · DLP") space S1BD("Spoke 1 BI<br/>dev/uat workspaces<br/>CA · OAP")
   space:7
-  HDD["🟩 Hub Data<br/>dev/uat workspaces 🔴"] space HDP["🟩 Hub Data<br/>prod workspace 🔴"] space HBP["🟩 Hub BI<br/>prod workspace 🔷"] space HBD["🟩 Hub BI<br/>dev/uat workspaces 🔴"]
+  HDD("Hub Data<br/>dev/uat workspaces<br/>CA · OAP") space HDP("Hub Data<br/>prod workspace<br/>CA · OAP") space HBP("Hub BI<br/>prod workspace<br/>CA · DLP") space HBD("Hub BI<br/>dev/uat workspaces<br/>CA · OAP")
   space:7
-  S2DD["🟩 Spoke 2 Data<br/>dev/uat workspaces 🔴"] space S2DP["🟩 Spoke 2 Data<br/>prod workspace 🔴"] space S2BP["🟩 Spoke 2 BI<br/>prod workspace 🔷"] space S2BD["🟩 Spoke 2 BI<br/>dev/uat workspaces 🔴"]
+  S2DD("Spoke 2 Data<br/>dev/uat workspaces<br/>CA · OAP") space S2DP("Spoke 2 Data<br/>prod workspace<br/>CA · OAP") space S2BP("Spoke 2 BI<br/>prod workspace<br/>CA · DLP") space S2BD("Spoke 2 BI<br/>dev/uat workspaces<br/>CA · OAP")
 
-  S1DD -- "❌ 1" --> S1DP
-  S1BP -- "✅ 3" --> S1DP
-  S1BD -- "❌ 1" --> S1BP
-  HDD -- "❌ 1" --> HDP
-  HBP -- "✅ 3" --> HDP
-  HBD -- "❌ 1" --> HBP
-  S2DD -- "❌ 1" --> S2DP
-  S2BP -- "✅ 3" --> S2DP
-  S2BD -- "❌ 1" --> S2BP
-  S1DP -- "✅ 2" --> HDP
+  S1DD -- "1: Blocked" --> S1DP
+  S1BP -- "3: Allowed" --> S1DP
+  S1BD -- "1: Blocked" --> S1BP
+  HDD -- "1: Blocked" --> HDP
+  HBP -- "3: Allowed" --> HDP
+  HBD -- "1: Blocked" --> HBP
+  S2DD -- "1: Blocked" --> S2DP
+  S2BP -- "3: Allowed" --> S2DP
+  S2BD -- "1: Blocked" --> S2BP
+  S1DP -- "2: Allowed" --> HDP
   HDP --> S1DP
-  HDP -- "✅ 2" --> S2DP
+  HDP -- "2: Allowed" --> S2DP
   S2DP --> HDP
-
-  classDef spokeData fill:#b0d7fb,stroke:#555,color:#000
-  classDef hubData fill:#abf0d8,stroke:#555,color:#000
-  classDef spokeBI fill:#fceda3,stroke:#555,color:#000
-  classDef hubBI fill:#f9d9ae,stroke:#555,color:#000
-  class S1DD,S1DP,S2DD,S2DP spokeData
-  class HDD,HDP hubData
-  class S1BP,S1BD,S2BP,S2BD spokeBI
-  class HBP,HBD hubBI
 ```
 
-*Figure 1. Fabric workspace security topology. 🟩 Conditional Access + network location · 🔴 Outbound Access Protection · 🔷 Purview DLP · ❌ blocked · ✅ allowed.*
+*Figure 1. Fabric workspace security topology. CA = Conditional Access and an approved network location; OAP = Outbound Access Protection; DLP = Microsoft Purview DLP. Arrow labels identify blocked and allowed requests. Arrows indicate access requests, not data movement.*
 
 **How to read the diagram:**
 
 | Marker | Control |
 |---|---|
-| 🔴 Red circle | **Outbound Access Protection (OAP)**: no access to public or unapproved destinations |
-| 🟩 Green square | **Entra Conditional Access** + approved network location |
-| 🔷 Blue diamond | **Microsoft Purview DLP** on production BI workspaces |
-| ① | DEV/UAT workspaces are blocked from reaching PROD by OAP |
-| ② | Lakehouse allow lists enable bi-directional Hub ↔ spoke access through OAP |
-| ③ | BI workspaces without OAP reach their Data workspaces with no allow lists or managed private endpoints |
+| OAP | **Outbound Access Protection**: no access to public or unapproved destinations |
+| CA (all workspaces) | **Entra Conditional Access** + approved network location |
+| DLP | **Microsoft Purview DLP** on production BI workspaces |
+| 1: Blocked | DEV/UAT workspaces are blocked from reaching PROD by OAP |
+| 2: Allowed | Lakehouse allow lists enable bi-directional Hub ↔ spoke access through OAP |
+| 3: Allowed | BI workspaces without OAP reach their Data workspaces with no allow lists or managed private endpoints |
 
 **Who owns what:**
 

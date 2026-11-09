@@ -190,6 +190,8 @@
   },
   "active": "4c573238dd10d004",
   "lastOpenFiles": [
+    "_layouts/mermaid.html",
+    "_layouts",
     "index.md",
     "posts/fabric-hub-spoke-security-blog.md",
     "assets/fabric-security-topology (1).png",
