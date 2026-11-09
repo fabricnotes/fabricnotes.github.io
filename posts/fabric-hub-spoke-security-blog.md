@@ -27,7 +27,7 @@ The architecture is built to:
 
 Workspaces are split three ways: by **domain** (Hub, Spoke 1, Spoke 2), by **workload** (Data vs. BI) and by **lifecycle stage** (DEV/UAT vs. PROD). Spoke 1 and Spoke 2 stand in for any number of domains.
 
-![[fabric-security-topology (1).png]]
+![[../assets/fabric-security-topology (1).png]]
 
 | Marker | Control |
 |---|---|

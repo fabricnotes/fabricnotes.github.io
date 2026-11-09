@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "index.md",
+                "file": "posts/fabric-hub-spoke-security-blog.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "index"
+              "title": "fabric-hub-spoke-security-blog"
             }
           }
         ]
@@ -99,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "index.md",
+                "file": "posts/fabric-hub-spoke-security-blog.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +118,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "index.md",
+                "file": "posts/fabric-hub-spoke-security-blog.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -161,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "index.md",
+                "file": "posts/fabric-hub-spoke-security-blog.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -190,11 +190,11 @@
   },
   "active": "4c573238dd10d004",
   "lastOpenFiles": [
+    "index.md",
     "posts/fabric-hub-spoke-security-blog.md",
     "assets/fabric-security-topology (1).png",
     "assets",
     "fabric-security-topology (1).png",
-    "index.md",
     "images/fabric-security-topology.png.md",
     "images",
     "_config.yml",
