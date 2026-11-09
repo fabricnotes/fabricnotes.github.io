@@ -27,7 +27,42 @@ The architecture is built to:
 
 Workspaces are split three ways: by **domain** (Hub, Spoke 1, Spoke 2), by **workload** (Data vs. BI) and by **lifecycle stage** (DEV/UAT vs. PROD). Spoke 1 and Spoke 2 stand in for any number of domains.
 
-![[../assets/fabric-security-topology (1).png]]
+```mermaid
+block-beta
+  columns 7
+  S1DD["🟩 Spoke 1 Data<br/>dev/uat workspaces 🔴"] space S1DP["🟩 Spoke 1 Data<br/>prod workspace 🔴"] space S1BP["🟩 Spoke 1 BI<br/>prod workspace 🔷"] space S1BD["🟩 Spoke 1 BI<br/>dev/uat workspaces 🔴"]
+  space:7
+  HDD["🟩 Hub Data<br/>dev/uat workspaces 🔴"] space HDP["🟩 Hub Data<br/>prod workspace 🔴"] space HBP["🟩 Hub BI<br/>prod workspace 🔷"] space HBD["🟩 Hub BI<br/>dev/uat workspaces 🔴"]
+  space:7
+  S2DD["🟩 Spoke 2 Data<br/>dev/uat workspaces 🔴"] space S2DP["🟩 Spoke 2 Data<br/>prod workspace 🔴"] space S2BP["🟩 Spoke 2 BI<br/>prod workspace 🔷"] space S2BD["🟩 Spoke 2 BI<br/>dev/uat workspaces 🔴"]
+
+  S1DD -- "❌ 1" --> S1DP
+  S1BP -- "✅ 3" --> S1DP
+  S1BD -- "❌ 1" --> S1BP
+  HDD -- "❌ 1" --> HDP
+  HBP -- "✅ 3" --> HDP
+  HBD -- "❌ 1" --> HBP
+  S2DD -- "❌ 1" --> S2DP
+  S2BP -- "✅ 3" --> S2DP
+  S2BD -- "❌ 1" --> S2BP
+  S1DP -- "✅ 2" --> HDP
+  HDP --> S1DP
+  HDP -- "✅ 2" --> S2DP
+  S2DP --> HDP
+
+  classDef spokeData fill:#b0d7fb,stroke:#555,color:#000
+  classDef hubData fill:#abf0d8,stroke:#555,color:#000
+  classDef spokeBI fill:#fceda3,stroke:#555,color:#000
+  classDef hubBI fill:#f9d9ae,stroke:#555,color:#000
+  class S1DD,S1DP,S2DD,S2DP spokeData
+  class HDD,HDP hubData
+  class S1BP,S1BD,S2BP,S2BD spokeBI
+  class HBP,HBD hubBI
+```
+
+*Figure 1. Fabric workspace security topology. 🟩 Conditional Access + network location · 🔴 Outbound Access Protection · 🔷 Purview DLP · ❌ blocked · ✅ allowed.*
+
+**How to read the diagram:**
 
 | Marker | Control |
 |---|---|
